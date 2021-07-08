@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Navigation.Modules.History;
 using System;
 using System.Reflection;
 using Xamarin.Forms;
@@ -22,7 +23,7 @@ namespace Navigation
             // get container
             var container = builder.Build();
 
-            MainPage = container.Resolve<CalculatorView>();
+            MainPage = container.Resolve<HistoryView>();
         }
 
         protected override void OnStart()
