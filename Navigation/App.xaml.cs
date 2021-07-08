@@ -22,7 +22,7 @@ namespace Navigation
             // get container
             var container = builder.Build();
 
-            MainPage = container.Resolve<MainView>();
+            MainPage = container.Resolve<CalculatorView>();
         }
 
         protected override void OnStart()
