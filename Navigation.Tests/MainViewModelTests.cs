@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using Moq;
+using System.Threading.Tasks;
 
 namespace Navigation.Tests
 {
@@ -10,12 +12,15 @@ namespace Navigation.Tests
         [Fact]
         public void DisplayAlertCommand_displays_alert()
         {
-            var dialogMessage = new DialogMessageMock();
-            var viewModel = new MainViewModel(dialogMessage);
+            var mockDialogMessage = new Mock<IDialogMessage>();
+            mockDialogMessage.Setup(x => x.DisplayAlert("Hello", "Hello there!", "Ok"))
+                .Returns(Task.CompletedTask);
+
+            var viewModel = new MainViewModel(mockDialogMessage.Object);
 
             viewModel.DisplayAlertCommand.Execute(null);
 
-            Assert.Equal(1, dialogMessage.DisplayAlertCallCount);
+            mockDialogMessage.Verify(x => x.DisplayAlert("Hello", "Hello there!", "Ok"), Times.Once);
         }
     }
 }
