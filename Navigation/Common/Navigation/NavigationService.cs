@@ -1,5 +1,6 @@
 ﻿using Autofac;
 using Navigation.Modules.History;
+using Navigation.Modules.Info;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -14,7 +15,8 @@ namespace Navigation.Common.Navigation
         private IComponentContext _container;
         private readonly Dictionary<Type, Type> _pageMap = new Dictionary<Type, Type>
         {
-            { typeof(HistoryViewModel), typeof(HistoryView) }
+            { typeof(HistoryViewModel), typeof(HistoryView) },
+            { typeof(InfoViewModel), typeof(InfoView) }
         };
 
         public NavigationService(Func<INavigation> navigation, IComponentContext container)

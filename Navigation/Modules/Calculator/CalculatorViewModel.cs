@@ -1,5 +1,6 @@
 ﻿using Navigation.Common.Navigation;
 using Navigation.Modules.History;
+using Navigation.Modules.Info;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -63,7 +64,7 @@ namespace Navigation
 
         private async Task GoToHistory()
         {
-            await _navigation.PushAsync<HistoryViewModel>(_calculatorHistory);
+            await _navigation.PushAsync<InfoViewModel>(_calculatorHistory);
         }
 
         public ICommand ClearCommand => new Command(ClearText);
