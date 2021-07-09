@@ -1,4 +1,7 @@
-﻿using System.Windows.Input;
+﻿using Navigation.Common.Navigation;
+using Navigation.Modules.History;
+using System.Threading.Tasks;
+using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Navigation
@@ -26,11 +29,13 @@ namespace Navigation
         private string _secondNumber = string.Empty;
         private CalculatorState _state;
         private Operation _currentOperation;
+        private INavigationService _navigation;
 
-        public CalculatorViewModel()
+        public CalculatorViewModel(INavigationService navigation)
         {
             _state = CalculatorState.PopulatingFirstNumber;
             _currentOperation = Operation.None;
+            _navigation = navigation;
         }
 
         public string DisplayText
@@ -41,6 +46,13 @@ namespace Navigation
                 _displayText = value;
                 OnPropertyChanged();
             }
+        }
+
+        public ICommand ShowHistoryCommand => new Command(async () => { await GoToHistory(); });
+
+        private async Task GoToHistory()
+        {
+            await _navigation.PushAsync<HistoryViewModel>();
         }
 
         public ICommand ClearCommand => new Command(ClearText);

@@ -16,7 +16,9 @@
                                    CommandParameter="{Binding}" />
                             </SwipeItems>
                         </SwipeView.RightItems>
-                        <Label Padding="20,10,10,10" Text="{Binding .}" FontSize="26" />
+                        <StackLayout>
+                            <Label Padding="20,10,10,10" Text="{Binding .}" FontSize="26" />
+                        </StackLayout>
                     </SwipeView>
                 </DataTemplate>
             </CollectionView.ItemTemplate>

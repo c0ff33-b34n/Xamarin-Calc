@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Navigation.Common.Navigation;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
@@ -7,7 +8,7 @@ using Xamarin.Forms;
 
 namespace Navigation.Modules.History
 {
-    public class HistoryViewModel : BindableObject
+    public class HistoryViewModel : BaseViewModel
     {
         public HistoryViewModel()
         {
