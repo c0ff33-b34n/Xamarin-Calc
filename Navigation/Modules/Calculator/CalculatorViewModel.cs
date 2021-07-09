@@ -38,6 +38,15 @@ namespace Navigation
             _state = CalculatorState.PopulatingFirstNumber;
             _currentOperation = Operation.None;
             _navigation = navigation;
+            SubscribeToMessage();
+        }
+
+        private void SubscribeToMessage()
+        {
+            MessagingCenter.Subscribe<HistoryViewModel, List<string>>(this, "Items", (vm, list) =>
+            {
+                _calculatorHistory = list;
+            });
         }
 
         public string DisplayText

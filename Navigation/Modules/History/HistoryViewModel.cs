@@ -33,6 +33,7 @@ namespace Navigation.Modules.History
         private void deleteItem(string item)
         {
             Items.Remove(item);
+            MessagingCenter.Send(this, "Items", new List<string>(Items));
         }
     }
 }
