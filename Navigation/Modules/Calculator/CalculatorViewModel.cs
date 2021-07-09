@@ -1,5 +1,6 @@
 ﻿using Navigation.Common.Navigation;
 using Navigation.Modules.History;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
@@ -30,6 +31,7 @@ namespace Navigation
         private CalculatorState _state;
         private Operation _currentOperation;
         private INavigationService _navigation;
+        private List<string> _calculatorHistory = new List<string>();
 
         public CalculatorViewModel(INavigationService navigation)
         {
@@ -52,7 +54,7 @@ namespace Navigation
 
         private async Task GoToHistory()
         {
-            await _navigation.PushAsync<HistoryViewModel>();
+            await _navigation.PushAsync<HistoryViewModel>(_calculatorHistory);
         }
 
         public ICommand ClearCommand => new Command(ClearText);
@@ -111,6 +113,15 @@ namespace Navigation
                 !string.IsNullOrWhiteSpace(_secondNumber))
             {
                 Calculate();
+                _currentOperation = Operation.None;
+                return;
+            }
+            if (operation != Operation.None &&
+                !string.IsNullOrWhiteSpace(_firstNumber) &&
+                !string.IsNullOrWhiteSpace(_secondNumber))
+            {
+                Calculate();
+                _currentOperation = operation;
                 return;
             }
             _currentOperation = operation;
@@ -141,10 +152,22 @@ namespace Navigation
                     break;
             }
             DisplayText = result.ToString();
-            _currentOperation = Operation.None;
-            _state = CalculatorState.PopulatingFirstNumber;
+            _calculatorHistory.Add($"{_firstNumber} {GetOperationString()} {_secondNumber} = {result}");
+            _state = CalculatorState.PopulatingSecondNumber;
             _firstNumber = result.ToString();
             _secondNumber = string.Empty;
+        }
+
+        private object GetOperationString()
+        {
+            return _currentOperation switch
+            {
+                Operation.Add => "+",
+                Operation.Subtract => "-",
+                Operation.Divide => "/",
+                Operation.Multiply => "*",
+                _ => ""
+            };
         }
     }
 }

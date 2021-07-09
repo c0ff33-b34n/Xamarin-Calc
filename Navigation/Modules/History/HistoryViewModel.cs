@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
@@ -12,12 +13,14 @@ namespace Navigation.Modules.History
     {
         public HistoryViewModel()
         {
-            Items = new ObservableCollection<string>
-            {
-                "44 + 5 = 49",
-                "36 / 9 = 4",
-                "21 + 4 = 84"
-            };
+            Items = new ObservableCollection<string>();
+        }
+
+        public override Task InitializeAsync(object parameter)
+        {
+            Items = new ObservableCollection<string>(parameter as List<string>);
+            OnPropertyChanged("Items");
+            return base.InitializeAsync(parameter); 
         }
 
         public ObservableCollection<string> Items { get; set; }
